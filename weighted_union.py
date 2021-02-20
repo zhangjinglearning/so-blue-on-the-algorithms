@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 # Dynamic Connectivity
 # Question
 # How many connected components result after performing the following sequence of union operations on a set of items?
@@ -15,8 +16,8 @@ u8 = (1, 9)
 union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
-layer_size = [1 for i in range(0, 10)]
-print('layer_sz  ->', layer_size)
+width_size = [1 for i in range(0, 10)]
+print('width_sz  ->', width_size)
 print('original  ->', point_lst)
 
 # implement interface
@@ -26,28 +27,31 @@ def linked_in(p1, p2):
     ###################
     # weighted union #
     #################
-    s1 = layer_size[p1]
-    s2 = layer_size[p2]
+    s1 = width_size[p1]
+    s2 = width_size[p2]
     root = r1
     if s1 < s2:
         root = r2
     if r1 == root:
         point_lst[r2] = root
+        width_size[p1] = s1 + 1
+        width_size[p2] = 0
     elif r2 == root:
         point_lst[r1] = root
+        width_size[p2] = s2 + 1
+        width_size[p1] = 0
 
 def is_linked(p1, p2):
     return find_root(p1) == find_root(p2)
 
 def find_root(point):
     root = point
-    size = 1
     while point_lst[root] != root:
         root = point_lst[root]
-        size = size + 1
-    # set current point to root
-    point_lst[point] = root
-    layer_size[point] = size
+    # 压缩路径 提高 find 效率，压缩还要增加 width，麻烦
+    if root != point:
+        # point_lst[point] = root
+        width_size[point] = 0
     return root
 
 # connect each union
@@ -60,7 +64,7 @@ print('connected ->', point_lst)
 # point to root with re-find
 ###
 for index in range(0, 10):
-    find_root(index)
+    point_lst[index] = find_root(index)
 
 print('point root->', point_lst)
-print('layer_sz  ->', layer_size)
+print('width_sz  ->', width_size)

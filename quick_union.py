@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 # Dynamic Connectivity
 # Question
 # How many connected components result after performing the following sequence of union operations on a set of items?
@@ -37,9 +38,12 @@ def find_root(point):
     ################
     # find deeply #
     ##############
+    current_point = point
     while point_lst[point] != point:
         point = point_lst[point]
-    # harness set current point to root
+    # 压缩路径，提高 find 效率
+    if current_point != point:
+        point_lst[current_point] = point
     return point
 
 # connect each union
