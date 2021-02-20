@@ -15,7 +15,7 @@ u8 = (1, 9)
 union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
-print('original  ->', point_lst)
+print('original ->', point_lst)
 
 # implement interface
 def linked_in(p1, p2):
@@ -37,20 +37,21 @@ def find_root(point):
     ################
     # find deeply #
     ##############
-    root = point
-    while point_lst[root] != root:
-        root = point_lst[root]
-    point_lst[point] = root
-    return root
+    while point_lst[point] != point:
+        point = point_lst[point]
+    # harness set current point to root
+    return point
 
 # connect each union
 for (p1, p2) in union_lst:
     if not is_linked(p1, p2):
         linked_in(p1, p2)
-print('connected ->', point_lst)
+print('connected->', point_lst)
 
-# point to root
+###
+# point to root by deep findly
+###
 root_point_lst = list()
 for point in point_lst:
     root_point_lst.append(find_root(point))
-print('point root->', root_point_lst)
+print('point to ->', root_point_lst)

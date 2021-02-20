@@ -15,7 +15,7 @@ u8 = (1, 9)
 union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
-print('original  ->', point_lst)
+print('original ->', point_lst)
 
 # implement interface
 def linked_in(p1, p2):
@@ -43,4 +43,10 @@ def find_root(point):
 for (p1, p2) in union_lst:
     if not is_linked(p1, p2):
         linked_in(p1, p2)
-print('connected ->', point_lst)
+print('connected->', point_lst)
+
+###
+# point to root
+# already linked by link more
+###
+print('point to ->', point_lst)

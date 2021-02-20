@@ -16,8 +16,8 @@ union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
 layer_size = [1 for i in range(0, 10)]
-print('original  ->', point_lst)
 print('layer_sz  ->', layer_size)
+print('original  ->', point_lst)
 
 # implement interface
 def linked_in(p1, p2):
@@ -45,6 +45,7 @@ def find_root(point):
     while point_lst[root] != root:
         root = point_lst[root]
         size = size + 1
+    # set current point to root
     point_lst[point] = root
     layer_size[point] = size
     return root
@@ -54,11 +55,13 @@ for (p1, p2) in union_lst:
     if not is_linked(p1, p2):
         linked_in(p1, p2)
 print('connected ->', point_lst)
-print('layer_sz  ->', layer_size)
 
-# point to root
+###
+# point to root with re-find
+###
 root_point_lst = list()
-for point in point_lst:
-    root_point_lst.append(find_root(point))
+for index in range(0, 10):
+    root_point_lst.append(find_root(index))
+    
 print('point root->', root_point_lst)
 print('layer_sz  ->', layer_size)
