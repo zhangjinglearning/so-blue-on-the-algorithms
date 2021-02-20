@@ -59,9 +59,8 @@ print('connected ->', point_lst)
 ###
 # point to root with re-find
 ###
-root_point_lst = list()
 for index in range(0, 10):
-    root_point_lst.append(find_root(index))
-    
-print('point root->', root_point_lst)
+    find_root(index)
+
+print('point root->', point_lst)
 print('layer_sz  ->', layer_size)
