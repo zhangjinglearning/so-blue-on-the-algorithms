@@ -16,7 +16,12 @@ u8 = (1, 9)
 union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
+# weight|width of tree
 width_size = [1 for i in range(0, 10)]
+# group size by root
+group_size = 10
+
+print('group size:', group_size)
 print('width_sz  ->', width_size)
 print('original  ->', point_lst)
 
@@ -40,6 +45,9 @@ def linked_in(p1, p2):
         point_lst[r1] = root
         width_size[p2] = s2 + 1
         width_size[p1] = 0
+    # set group size
+    global group_size
+    group_size = group_size - 1
 
 def is_linked(p1, p2):
     return find_root(p1) == find_root(p2)
@@ -48,9 +56,9 @@ def find_root(point):
     root = point
     while point_lst[root] != root:
         root = point_lst[root]
-    # 压缩路径 提高 find 效率，压缩还要增加 width，麻烦
+    # 压缩路径 提高 find 效率
     if root != point:
-        # point_lst[point] = root
+        point_lst[point] = root
         width_size[point] = 0
     return root
 
@@ -68,3 +76,4 @@ for index in range(0, 10):
 
 print('point root->', point_lst)
 print('width_sz  ->', width_size)
+print('group size:', group_size)

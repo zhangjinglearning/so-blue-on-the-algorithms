@@ -15,12 +15,17 @@ u8 = (1, 9)
 union_lst = (u1, u2, u3, u4, u5, u6, u7, u8)
 # point to itself
 point_lst = [i for i in range(0, 10)]
+# group size by root
+group_size = 10
+
+print('group size:', group_size)
 print('original ->', point_lst)
 
 # implement interface
 def linked_in(p1, p2):
     r1 = find_root(p1)
     r2 = find_root(p2)
+    # link rule
     root = min(r1, r2)
     ##############
     # link more #
@@ -29,6 +34,10 @@ def linked_in(p1, p2):
         point = point_lst[index]
         if point == r1 or point == r2:
             point_lst[index] = root
+    # set group size
+    if find_root(root) == root:
+        global group_size
+        group_size = group_size - 1
 
 def is_linked(p1, p2):
     return find_root(p1) == find_root(p2)
@@ -50,3 +59,4 @@ print('connected->', point_lst)
 # already linked by link more
 ###
 print('point to ->', point_lst)
+print('group size:', group_size)
