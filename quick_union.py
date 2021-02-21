@@ -46,7 +46,7 @@ def find_root(point):
     current_point = point
     while point_lst[point] != point:
         point = point_lst[point]
-    # 压缩路径，提高 find 效率
+    # compress the path, improve find efficiency
     if current_point != point:
         point_lst[current_point] = point
     return point
