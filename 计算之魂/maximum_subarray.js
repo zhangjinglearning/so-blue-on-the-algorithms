@@ -85,26 +85,25 @@ if (forwardMaxIndex > backwardMaxIndex) {
 const numArr = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
 // const numArr = [1, 1, 1, 1, -5, 1, 1, 1, 1];
 
-const maxCrossSubArray = (arr, start, mid, end) => {
-  let leftSum = -Infinity;
+const maxCrossSubArray = (arr, mid) => {
+  let leftMax = -Infinity;
+  let rightMax = -Infinity;
+
   let sum = 0;
-  for (let i = mid; i >= start; i--) {
+  // from middle to left
+  for (let i = mid - 1; i >= 0; i--) {
     sum += arr[i];
-    if (sum > leftSum) {
-      leftSum = sum;
-    }
+    leftMax = Math.max(leftMax, sum);
   }
 
-  let rightSum = -Infinity;
   sum = 0;
-  for (let i = mid + 1; i <= end; i++) {
+  // from middle to right
+  for (let i = mid; i < arr.length; i++) {
     sum += arr[i];
-    if (sum > rightSum) {
-      rightSum = sum;
-    }
+    rightMax = Math.max(rightMax, sum);
   }
 
-  return leftSum + rightSum;
+  return leftMax + rightMax;
 };
 
 const maxSubArray = (arr) => {
@@ -118,7 +117,7 @@ const maxSubArray = (arr) => {
   const rightMax = maxSubArray(arr.slice(mid));
 
   // conquer
-  const crossMax = maxCrossSubArray(arr, 0, mid, arr.length - 1);
+  const crossMax = maxCrossSubArray(arr, mid);
   return Math.max(leftMax, rightMax, crossMax);
 };
 
