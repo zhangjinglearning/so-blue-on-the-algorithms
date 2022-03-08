@@ -25,10 +25,10 @@ const updateMaxSum = (curVal, index) => {
 
 nums.forEach((curVal, index) => {
   updateMaxSum(curVal, index);
-  // console.log(`${index}. curSum: ${curSum}, maxSum: ${maxSum}`);
+  console.log(`${index}. curSum: ${curSum}, maxSum: ${maxSum}`);
 });
 
-// console.log(`sum[${startIndex}, ${endIndex}] = ${maxSum}`);
+console.log(`sum[${startIndex}, ${endIndex}] = ${maxSum}`);
 
 /**
  * solution two: forward and backward
@@ -50,7 +50,7 @@ numList.forEach((curVal, index) => {
     forwardMaxIndex = index;
   }
 });
-// console.log(`forwardMaxIndex: ${forwardMaxIndex}, forwardMaxSum: ${forwardMaxSum}`);
+console.log(`forwardMaxIndex: ${forwardMaxIndex}, forwardMaxSum: ${forwardMaxSum}`);
 
 // search max by backward
 let backwardCurSum = 0;
@@ -61,7 +61,7 @@ for (let i = numList.length - 1; i >= 0; i--) {
     backwardMaxIndex = i;
   }
 }
-// console.log(`backwardMaxIndex: ${backwardMaxIndex}, backwardMaxSum: ${backwardMaxSum}`);
+console.log(`backwardMaxIndex: ${backwardMaxIndex}, backwardMaxSum: ${backwardMaxSum}`);
 
 // the max in the middle or not
 if (forwardMaxIndex > backwardMaxIndex) {
@@ -69,12 +69,12 @@ if (forwardMaxIndex > backwardMaxIndex) {
   for (let i = backwardMaxIndex; i <= forwardMaxIndex; i++) {
     sum += numList[i];
   }
-  // console.log(`sum[${backwardMaxIndex}, ${forwardMaxIndex}] = ${sum}`);
+  console.log(`sum[${backwardMaxIndex}, ${forwardMaxIndex}] = ${sum}`);
 } else {
   if (forwardMaxSum > backwardMaxSum) {
-    // console.log(`sum[0, ${forwardMaxIndex}] = ${forwardMaxSum}`);
+    console.log(`sum[0, ${forwardMaxIndex}] = ${forwardMaxSum}`);
   } else {
-    // console.log(`sum[${backwardMaxIndex}, ${numList.length - 1}] = ${backwardMaxSum}`);
+    console.log(`sum[${backwardMaxIndex}, ${numList.length - 1}] = ${backwardMaxSum}`);
   }
 }
 
@@ -82,3 +82,44 @@ if (forwardMaxIndex > backwardMaxIndex) {
  * solution three: divide and conquer
  * O(nlogn)
  */
+const numArr = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+// const numArr = [1, 1, 1, 1, -5, 1, 1, 1, 1];
+
+const maxCrossSubArray = (arr, start, mid, end) => {
+  let leftSum = -Infinity;
+  let sum = 0;
+  for (let i = mid; i >= start; i--) {
+    sum += arr[i];
+    if (sum > leftSum) {
+      leftSum = sum;
+    }
+  }
+
+  let rightSum = -Infinity;
+  sum = 0;
+  for (let i = mid + 1; i <= end; i++) {
+    sum += arr[i];
+    if (sum > rightSum) {
+      rightSum = sum;
+    }
+  }
+
+  return leftSum + rightSum;
+};
+
+const maxSubArray = (arr) => {
+  if (arr.length === 1) {
+    return arr[0];
+  }
+
+  // divide
+  const mid = Math.floor(arr.length / 2);
+  const leftMax = maxSubArray(arr.slice(0, mid));
+  const rightMax = maxSubArray(arr.slice(mid));
+
+  // conquer
+  const crossMax = maxCrossSubArray(arr, 0, mid, arr.length - 1);
+  return Math.max(leftMax, rightMax, crossMax);
+};
+
+console.log(`maxSubArray: ${maxSubArray(numArr)}`);
