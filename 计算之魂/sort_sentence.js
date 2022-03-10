@@ -22,32 +22,35 @@ const wordHipSwap = (index1, index2) => {
   wordsHip[index1] = wordsHip[index2];
   wordsHip[index2] = temp;
 };
+const getWordSequence = (son) => {
+  const sonWord = wordsHip[son];
+  const sonSeq = sonWord.charAt(sonWord.length - 1);
+  return sonSeq;
+};
 const maxHeap = (start, end) => {
   const dad = start;
-  let leftSon = 2 * dad + 1;
+  let son = dad * 2 + 1;
 
   // out of bound
-  if (leftSon >= end) {
+  if (son >= end) {
     return;
   }
 
-  // find the max son
-  const leftSonWord = wordsHip[leftSon];
-  const leftSonSeq = leftSonWord.charAt(leftSonWord.length - 1);
-  if (leftSon + 1 < end) {
-    const rightSonWord = wordsHip[leftSon + 1];
-    const rightSonSeq = rightSonWord.charAt(rightSonWord.length - 1);
-    if (leftSonSeq > rightSonSeq) {
-      leftSon++;
+  // find the bigger son
+  if (son + 1 < end) {
+    const son1Seq = getWordSequence(son);
+    const son2Seq = getWordSequence(son + 1);
+    if (son1Seq < son2Seq) {
+      son++;
     }
   }
 
-  // swap
-  const dadWord = wordsHip[dad];
-  const dadSeq = dadWord.charAt(dadWord.length - 1);
-  if (leftSonSeq > dadSeq) {
-    wordHipSwap(leftSon - 1, dad);
-    maxHeap(leftSon - 1, end);
+  // compare with dad
+  const sonSeq = getWordSequence(son);
+  const dadSeq = getWordSequence(dad);
+  if (sonSeq > dadSeq) {
+    wordHipSwap(son, dad);
+    maxHeap(son, end);
   }
 };
 
