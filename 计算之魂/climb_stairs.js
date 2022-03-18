@@ -1,5 +1,5 @@
 /**
- * solution one: recursive by fibonacci
+ * solution: recursive by fibonacci
  * O(2^n)
  */
 const climbStairs = (n) => {
